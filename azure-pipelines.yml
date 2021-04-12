@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 pool:
-  vmImage: 'ubuntu-1604'
+  vmImage: 'ubuntu-2004'
 
 trigger:
 - main
