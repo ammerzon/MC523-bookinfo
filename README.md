@@ -2,7 +2,7 @@
 
 Final project for the subject MC523 SS21 at FH OÖ Campus Hagenberg based on the Istio sample application [bookinfo](https://github.com/istio/istio/tree/master/samples/bookinfo).
 
-See <https://istio.io/docs/examples/bookinfo/>
+See: <https://istio.io/docs/examples/bookinfo/>
 
 ## Build docker images without pushing
 
@@ -36,9 +36,10 @@ The reference productpage HTML files are in [tests/apps/bookinfo/output](https:/
 
 The Bookinfo application is broken into four separate microservices:
 
-* **productpage**: The productpage microservice calls the details and reviews microservices to populate the page.
-* **details**: The details microservice contains book information.
-* **reviews**: The reviews microservice contains book reviews. It also calls the ratings microservice.
-* **ratings**: The ratings microservice contains book ranking information that accompanies a book review.
+* **productpage**: The ``productpage`` microservice calls the ``details`` and ``reviews`` microservices to populate the page.
+* **details**: The ``details`` microservice contains book information.
+* **reviews**: The ``reviews`` microservice contains book reviews. It also calls the ``ratings`` microservice.
+* **ratings**: The ``ratings`` microservice contains book ranking information that accompanies a book review.
+* **ratings-admin**: The ``ratings-admin`` microservice offers an REST API to maintain the ratings.
 
 ![](.github/architecture.png)

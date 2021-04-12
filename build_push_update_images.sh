@@ -13,6 +13,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+#
+# NOTICE: Adapted from https://github.com/istio/istio/blob/master/samples/bookinfo/build_push_update_images.sh
 
 set -o errexit
 
@@ -62,7 +64,7 @@ src/build-services.sh "${VERSION}" "${PREFIX}"
 #get all the new image names and tags
 for v in ${VERSION} "latest"
 do
-  IMAGES+=$(docker images -f reference="${PREFIX}/examples-bookinfo*:$v" --format "{{.Repository}}:$v")
+  IMAGES+=$(docker images -f reference="${PREFIX}/bookinfo*:$v" --format "{{.Repository}}:$v")
   IMAGES+=" "
 done
 
@@ -109,4 +111,4 @@ do
 done
 
 #Update image references in the yaml files
-find . -name "*bookinfo*.yaml" -exec sed -i.bak "s/\\(istio\\/examples-bookinfo-.*\\):[[:digit:]]*\\.[[:digit:]]*\\.[[:digit:]]*/\\1:$VERSION/g" {} +
+find . -name "*bookinfo*.yaml" -exec sed -i.bak "s/\\(istio\\/bookinfo-.*\\):[[:digit:]]*\\.[[:digit:]]*\\.[[:digit:]]*/\\1:$VERSION/g" {} +

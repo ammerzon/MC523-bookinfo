@@ -12,21 +12,42 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-##################################################################################################
-# Productpage services
-##################################################################################################
 apiVersion: v1
 kind: Service
 metadata:
-  name: productpage
+  name: mongodb
   labels:
-    app: productpage
-    service: productpage
+    app: mongodb
 spec:
-  type: NodePort
   ports:
-  - port: 9080
-    name: http
+  - port: 27017
+    name: mongo
   selector:
-    app: productpage
+    app: mongodb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-v1
+  labels:
+    app: mongodb
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        version: v1
+    spec:
+      containers:
+      - name: mongodb 
+        image: docker.io/ammerzon/bookinfo-mongodb:1.15.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 27017
 ---

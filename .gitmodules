@@ -1,0 +1,3 @@
+[submodule "src/ratings-admin"]
+	path = src/ratings-admin
+	url = https://github.com/sve2-2021ss/jee-ammer

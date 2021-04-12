@@ -1,0 +1,34 @@
+apiVersion: skaffold/v2beta13
+kind: Config
+metadata:
+  name: bookinfo
+build:
+  artifacts:
+    - image: ghcr.io/ammerzon/bookinfo-details-v1
+      context: src/details
+      docker:
+        dockerfile: Dockerfile
+    - image: ghcr.io/ammerzon/bookinfo-productpage-v1
+      context: src/productpage
+      docker:
+        dockerfile: Dockerfile
+    - image: ghcr.io/ammerzon/bookinfo-ratings-v1
+      context: src/ratings
+      docker:
+        dockerfile: Dockerfile
+    - image: ghcr.io/ammerzon/bookinfo-ratings-admin-v1
+      context: src/ratings-admin
+      docker:
+        dockerfile: src/main/docker/Dockerfile.native
+    - image: ghcr.io/ammerzon/bookinfo-reviews-v1
+      context: src/reviews/reviews-wlpcfg
+      docker:
+        dockerfile: Dockerfile
+    - image: ghcr.io/ammerzon/bookinfo-mongodb
+      context: src/mongodb
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - k8s-*

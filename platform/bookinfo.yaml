@@ -11,6 +11,8 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+#
+# NOTICE: Adapted from https://github.com/istio/istio/blob/master/samples/bookinfo/platform/kube/bookinfo.yaml
 
 ##################################################################################################
 # This file defines the services, service accounts, and deployments for the Bookinfo sample.
@@ -72,7 +74,7 @@ spec:
       serviceAccountName: bookinfo-details
       containers:
       - name: details
-        image: docker.io/istio/examples-bookinfo-details-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-details-v1:1.15.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -123,7 +125,7 @@ spec:
       serviceAccountName: bookinfo-ratings
       containers:
       - name: ratings
-        image: docker.io/istio/examples-bookinfo-ratings-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-ratings-v2:1.15.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -174,7 +176,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: docker.io/istio/examples-bookinfo-reviews-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-reviews-v1:1.15.0
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -214,7 +216,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: docker.io/istio/examples-bookinfo-reviews-v2:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-reviews-v2:1.15.0
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -254,7 +256,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: docker.io/istio/examples-bookinfo-reviews-v3:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-reviews-v3:1.15.0
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -318,7 +320,7 @@ spec:
       serviceAccountName: bookinfo-productpage
       containers:
       - name: productpage
-        image: docker.io/istio/examples-bookinfo-productpage-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-productpage-v1:1.15.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
