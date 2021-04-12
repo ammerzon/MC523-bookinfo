@@ -3,6 +3,8 @@ kind: Config
 metadata:
   name: bookinfo
 build:
+  local:
+    push: true
   artifacts:
     - image: ghcr.io/ammerzon/bookinfo-details-v1
       context: src/details
@@ -12,10 +14,12 @@ build:
       context: src/productpage
       docker:
         dockerfile: Dockerfile
-    - image: ghcr.io/ammerzon/bookinfo-ratings-v1
+    - image: ghcr.io/ammerzon/bookinfo-ratings-v2
       context: src/ratings
       docker:
         dockerfile: Dockerfile
+        buildArgs:
+          service_version: v2
     - image: ghcr.io/ammerzon/bookinfo-ratings-admin-v1
       context: src/ratings-admin
       docker:
@@ -24,6 +28,23 @@ build:
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
+        buildArgs:
+          service_version: v1
+    - image: ghcr.io/ammerzon/bookinfo-reviews-v2
+      context: src/reviews/reviews-wlpcfg
+      docker:
+        dockerfile: Dockerfile
+        buildArgs:
+          service_version: v2
+          enable_ratings: true
+    - image: ghcr.io/ammerzon/bookinfo-reviews-v3
+      context: src/reviews/reviews-wlpcfg
+      docker:
+        dockerfile: Dockerfile
+        buildArgs:
+          service_version: v3
+          enable_ratings: true
+          star_color: red
     - image: ghcr.io/ammerzon/bookinfo-mongodb
       context: src/mongodb
       docker:
@@ -31,4 +52,5 @@ build:
 deploy:
   kubectl:
     manifests:
-      - k8s-*
+      - platform/bookinfo.yaml
+      - platform/bookinfo-db.yaml

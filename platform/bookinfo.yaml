@@ -74,7 +74,7 @@ spec:
       serviceAccountName: bookinfo-details
       containers:
       - name: details
-        image: ghcr.io/ammerzon/bookinfo-details-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-details-v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -125,7 +125,7 @@ spec:
       serviceAccountName: bookinfo-ratings
       containers:
       - name: ratings
-        image: ghcr.io/ammerzon/bookinfo-ratings-v2:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-ratings-v2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -176,7 +176,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: ghcr.io/ammerzon/bookinfo-reviews-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-reviews-v1
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -216,7 +216,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: ghcr.io/ammerzon/bookinfo-reviews-v2:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-reviews-v2
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -256,7 +256,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: ghcr.io/ammerzon/bookinfo-reviews-v3:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-reviews-v3
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -320,7 +320,7 @@ spec:
       serviceAccountName: bookinfo-productpage
       containers:
       - name: productpage
-        image: ghcr.io/ammerzon/bookinfo-productpage-v1:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-productpage-v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080

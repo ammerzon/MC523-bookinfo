@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: mongodb 
-        image: docker.io/ammerzon/bookinfo-mongodb:1.15.0
+        image: ghcr.io/ammerzon/bookinfo-mongodb
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 27017
