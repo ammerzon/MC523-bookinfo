@@ -4,35 +4,40 @@ Final project for the subject MC523 SS21 at FH OÖ Campus Hagenberg based on the
 
 See: <https://istio.io/docs/examples/bookinfo/>
 
-## Build docker images without pushing
+## 📝 Requirements
+
+- `docker`
+- `kubectl`
+- `skaffold`
+
+## 🚀 Get started
 
 ```bash
+skaffold run
+```
+
+### Build docker images without pushing
+
+```bash
+skaffold build
+# or 
 src/build-services.sh <version>
 ```
 
-The bookinfo versions are different from Istio versions since the sample should work with any version of Istio.
-
-## Update docker images in the yaml files
+### Push docker images to Github container registry
 
 ```bash
-sed -i "s/\(istio\/examples-bookinfo-.*\):[[:digit:]]\.[[:digit:]]\.[[:digit:]]/<your docker image with tag>/g" */bookinfo*.yaml
-```
-
-## Push docker images to docker hub
-
-One script to build the docker images, push them to docker hub and to update the yaml files
-
-```bash
+skaffold run
+# or
 build_push_update_images.sh <version>
 ```
 
-## Tests
+## ✅ Tests
 
 The Bookinfo e2e test is in [tests/e2e/tests/bookinfo](https://github.com/istio/istio/tree/master/tests/e2e/tests/bookinfo), make target `e2e_bookinfo`.
 
-The reference productpage HTML files are in [tests/apps/bookinfo/output](https://github.com/istio/istio/tree/master/tests/apps/bookinfo/output). If the productpage HTML produced by the app is changed, remember to regenerate the reference HTML files and commit them with the same PR.
 
-## Architecture
+## 🏗 Architecture
 
 The Bookinfo application is broken into four separate microservices:
 
