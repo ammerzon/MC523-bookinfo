@@ -7,12 +7,16 @@ See: <https://istio.io/docs/examples/bookinfo/>
 ## 📝 Requirements
 
 - `docker`
+- `istioctl`
 - `kubectl`
 - `skaffold`
 
 ## 🚀 Get started
 
 ```bash
+pushd "src/ratings-admin"
+./gradlew build -Dquarkus.package.type=native
+popd
 skaffold run
 ```
 
@@ -30,6 +34,27 @@ src/build-services.sh <version>
 skaffold run
 # or
 build_push_update_images.sh <version>
+```
+
+## ☸️ Deploy Istio
+
+```bash
+istioctl install --set profile=demo -y
+# additionally deploy Jaeger
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.9/samples/addons/jaeger.yaml
+# additionally deploy Kiali
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.9/samples/addons/prometheus.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.9/samples/addons/kiali.yaml
+```
+
+For further infos see: [Istio: Getting Started](https://istio.io/latest/docs/setup/getting-started/#install)
+
+## 🗄 Using a private registry
+
+To use a private registry you have to add a Kubernetes secret to the cluster and update the `imagePullSecrets` in `bookinfo.yaml`.
+
+```bash
+kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
 ```
 
 ## ✅ Tests

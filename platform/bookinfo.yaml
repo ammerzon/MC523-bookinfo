@@ -28,6 +28,13 @@
 #   kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -l app=reviews,version=v3 # reviews-v3 Deployment
 ##################################################################################################
 
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bookinfo
+  labels:
+    istio-injection: enabled
+---
 ##################################################################################################
 # Details service
 ##################################################################################################
@@ -35,6 +42,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: details
+  namespace: bookinfo
   labels:
     app: details
     service: details
@@ -49,6 +57,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: bookinfo-details
+  namespace: bookinfo
   labels:
     account: details
 ---
@@ -56,6 +65,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: details-v1
+  namespace: bookinfo
   labels:
     app: details
     version: v1
@@ -67,6 +77,7 @@ spec:
       version: v1
   template:
     metadata:
+      namespace: bookinfo
       labels:
         app: details
         version: v1
@@ -78,6 +89,8 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+      imagePullSecrets:
+        - name: regsecret
 ---
 ##################################################################################################
 # Ratings service
@@ -86,6 +99,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: ratings
+  namespace: bookinfo
   labels:
     app: ratings
     service: ratings
@@ -100,6 +114,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: bookinfo-ratings
+  namespace: bookinfo
   labels:
     account: ratings
 ---
@@ -107,6 +122,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ratings-v1
+  namespace: bookinfo
   labels:
     app: ratings
     version: v1
@@ -118,6 +134,7 @@ spec:
       version: v1
   template:
     metadata:
+      namespace: bookinfo
       labels:
         app: ratings
         version: v1
@@ -129,6 +146,8 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+      imagePullSecrets:
+        - name: regsecret
 ---
 ##################################################################################################
 # Reviews service
@@ -137,6 +156,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: reviews
+  namespace: bookinfo
   labels:
     app: reviews
     service: reviews
@@ -151,6 +171,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: bookinfo-reviews
+  namespace: bookinfo
   labels:
     account: reviews
 ---
@@ -158,6 +179,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reviews-v1
+  namespace: bookinfo
   labels:
     app: reviews
     version: v1
@@ -169,6 +191,7 @@ spec:
       version: v1
   template:
     metadata:
+      namespace: bookinfo
       labels:
         app: reviews
         version: v1
@@ -188,6 +211,8 @@ spec:
           mountPath: /tmp
         - name: wlp-output
           mountPath: /opt/ibm/wlp/output
+      imagePullSecrets:
+        - name: regsecret
       volumes:
       - name: wlp-output
         emptyDir: {}
@@ -198,6 +223,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reviews-v2
+  namespace: bookinfo
   labels:
     app: reviews
     version: v2
@@ -209,6 +235,7 @@ spec:
       version: v2
   template:
     metadata:
+      namespace: bookinfo
       labels:
         app: reviews
         version: v2
@@ -228,6 +255,8 @@ spec:
           mountPath: /tmp
         - name: wlp-output
           mountPath: /opt/ibm/wlp/output
+      imagePullSecrets:
+        - name: regsecret
       volumes:
       - name: wlp-output
         emptyDir: {}
@@ -238,6 +267,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reviews-v3
+  namespace: bookinfo
   labels:
     app: reviews
     version: v3
@@ -249,6 +279,7 @@ spec:
       version: v3
   template:
     metadata:
+      namespace: bookinfo
       labels:
         app: reviews
         version: v3
@@ -268,6 +299,8 @@ spec:
           mountPath: /tmp
         - name: wlp-output
           mountPath: /opt/ibm/wlp/output
+      imagePullSecrets:
+        - name: regsecret
       volumes:
       - name: wlp-output
         emptyDir: {}
@@ -281,6 +314,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: productpage
+  namespace: bookinfo
   labels:
     app: productpage
     service: productpage
@@ -295,6 +329,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: bookinfo-productpage
+  namespace: bookinfo
   labels:
     account: productpage
 ---
@@ -302,6 +337,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productpage-v1
+  namespace: bookinfo
   labels:
     app: productpage
     version: v1
@@ -313,6 +349,7 @@ spec:
       version: v1
   template:
     metadata:
+      namespace: bookinfo
       labels:
         app: productpage
         version: v1
@@ -327,6 +364,8 @@ spec:
         volumeMounts:
         - name: tmp
           mountPath: /tmp
+      imagePullSecrets:
+        - name: regsecret
       volumes:
       - name: tmp
         emptyDir: {}
