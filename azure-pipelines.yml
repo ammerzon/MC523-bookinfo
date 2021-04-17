@@ -18,6 +18,12 @@ stages:
 - stage: Build
   displayName: Build Stage
   jobs:
+  - job: Preperation
+    displayName: Prepare Agent
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: 'read -sp $(AZUREPASSWORD) AZ_PASS && echo && read -sp $(AZUREUSERNAME) AZ_USER && echo && az login -u $AZ_USER -p $AZ_PASS'
   - job: Build
     displayName: Build Image
     steps:
@@ -26,6 +32,7 @@ stages:
       inputs:
         containerRegistry: '$(CONTAINERREGISTRY)'
         repository: 'bookinfo'
+
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/src/mongodb/Dockerfile'
         tags: '$(tag)'
