@@ -37,7 +37,7 @@ stages:
     - task: Docker@2
       displayName: Build an push image
       inputs:
-        containerRegistry: '$(CONTAINERREGISTRYLOGINSERVER)'
+        containerRegistry: '$(CONTAINERREGISTRYNAME)'
         repository: 'bookinfo'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/src/mongodb/Dockerfile'
