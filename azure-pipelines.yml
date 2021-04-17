@@ -29,11 +29,13 @@ stages:
     - task: Bash@3
       displayName: Login to azure account
       inputs:
+        targetType: 'inline'
         script: |
           az login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)
     - task: Bash@3
       displayName: Login to container registry
       inputs:
+        targetType: 'inline'
         script: |
           az acr login --name $(CONTAINERREGISTRYNAME)
     - task: Docker@2
