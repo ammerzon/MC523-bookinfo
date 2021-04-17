@@ -49,5 +49,5 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          docker image tag $(tagd) $(remote_tag)
+          docker image tag $(tag) $(remote_tag)
           docker push $(remote_tag)
