@@ -23,7 +23,7 @@ stages:
     steps:
     - task: CmdLine@2
       inputs:
-        script: 'read -sp $(AZUREPASSWORD) AZ_PASS && echo && read -sp $(AZUREUSERNAME) AZ_USER && echo && az login -u $AZ_USER -p $AZ_PASS'
+        script: 'read -sp $(AZUREPASSWORD) AZ_PASS && echo && az login -u $(AZUREUSERNAME) -p $AZ_PASS'
   - job: Build
     displayName: Build Image
     steps:
