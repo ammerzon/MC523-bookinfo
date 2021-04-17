@@ -37,7 +37,7 @@ stages:
     - task: Docker@2
       displayName: Build an push image
       inputs:
-        containerRegistry: '$(CONTAINERREGISTRYNAME)'
+        containerRegistry: '$(CONTAINERREGISTRYLOGINSERVER)'
         repository: 'bookinfo'
 
         command: 'buildAndPush'
