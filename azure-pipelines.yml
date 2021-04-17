@@ -24,7 +24,7 @@ stages:
     - task: CmdLine@2
       displayName: Login to azure account
       inputs:
-        script: 'read -sp $(AZUREPASSWORD) AZ_PASS && echo && az login --debug -u $(AZUREUSERNAME) -p $AZ_PASS'
+        script: 'az login --debug -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)'
     - task: CmdLine@2
       displayName: Login to container registry
       inputs:
