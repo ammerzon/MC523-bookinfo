@@ -25,10 +25,6 @@ stages:
       displayName: Login to azure account
       inputs:
         script: 'read -sp $(AZUREPASSWORD) AZ_PASS && echo && az login -u $(AZUREUSERNAME) -p $AZ_PASS'
-    - task: CmdLine@2
-      displayName: Login to container registry
-      inputs:
-        script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
   - job: Build
     displayName: Build Image
     dependsOn: Preperation
