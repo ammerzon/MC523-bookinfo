@@ -12,8 +12,8 @@ resources:
 - repo: self
 
 variables:
-  container_tag: $(CONTAINERNAME):latest
-  remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(container_tag)
+  tag: '$(Build.BuildId)'
+  remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME):latest
 
 stages:
 - stage: Build
@@ -43,12 +43,11 @@ stages:
       inputs:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/mongodb/Dockerfile'
-        tags: |
-          $(container-tag)
+        tags: '$(tag)'
     - task: Bash@3
       displayName: Push Image
       inputs:
         targetType: 'inline'
         script: |
-          docker image tag $(container_tag) $(remote_tag)
+          docker image tag $(tagd) $(remote_tag)
           docker push $(remote_tag)
