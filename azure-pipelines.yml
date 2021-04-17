@@ -16,19 +16,15 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build Stage
   jobs:
-  - job: Build
-    displayName: Build
+  - job: BuildImage
+    displayName: Build Image
     steps:
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: 'curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && sudo install skaffold /usr/local/bin/'
     - task: Docker@2
       displayName: Build an image
       inputs:
         command: build
-        dockerfile: '$(Build.SourcesDirectory)/src/details/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/src/mongodb/Dockerfile'
         tags: |
           $(tag)
