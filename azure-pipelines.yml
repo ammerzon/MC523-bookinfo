@@ -13,7 +13,7 @@ resources:
 
 variables:
   container_tag: $(CONTAINERNAME):latest
-  remote_tag: $(CONTAINERREGISTRYLOGINSERVER):$(container_tag)
+  remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(container_tag)
 
 stages:
 - stage: Build
