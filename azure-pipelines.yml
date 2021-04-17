@@ -27,11 +27,15 @@ stages:
       inputs:
         dockerVersion: '20.10.5'
     - task: Bash@3
-      displayName: Login to Container Registry
+      displayName: Login to azure account
       inputs:
-        targetType: 'inline'
         script: |
-          docker login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD) $(CONTAINERREGISTRYLOGINSERVER)
+          az login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)
+    - task: Bash@3
+      displayName: Login to container registry
+      inputs:
+        script: |
+          az acr login --name $(CONTAINERREGISTRYNAME)
     - task: Docker@2
       displayName: Build Image
       inputs:
