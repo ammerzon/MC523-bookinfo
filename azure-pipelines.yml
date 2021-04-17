@@ -12,30 +12,37 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  container_tag: $(CONTAINERNAME):latest
+  remote_tag: $(CONTAINERREGISTRYLOGINSERVER):$(container_tag)
 
 stages:
 - stage: Build
   displayName: Build Stage
   jobs:
-  - job: Preperation
-    displayName: Prepare Agent
-    steps:
-    - task: CmdLine@2
-      displayName: Login to azure account
-      inputs:
-        script: 'az login --debug -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)'
-    - task: CmdLine@2
-      displayName: Login to container registry
-      inputs:
-        script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
   - job: Build
     displayName: Build Image
-    dependsOn: Preperation
-    condition: succeeded()
     steps:
+    - task: DockerInstaller@0
+      displayName: Install Docker
+      inputs:
+        dockerVersion: '20.10.5'
+    - task: Bash@3
+      displayName: Login to Container Registry
+      inputs:
+        targetType: 'inline'
+        script: |
+          docker login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD) $(CONTAINERREGISTRYLOGINSERVER)'
     - task: Docker@2
+      displayName: Build Image
       inputs:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/mongodb/Dockerfile'
-        tags: '$(tag)'
+        tags: |
+          $(container-tag)
+    - task: Bash@3
+      displayName: Push Image
+      inputs:
+        targetType: 'inline'
+        script: |
+          docker image tag $(container_tag) $(remote_tag)
+          docker push $(remote_tag)
