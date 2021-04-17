@@ -15,8 +15,8 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Preperation
-  displayName: Prepare Agent
+- stage: Build
+  displayName: Build image
   jobs:
   - job: InstallSkaffold
     displayName: Install Skaffold
@@ -25,10 +25,6 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && sudo install skaffold /usr/local/bin/'
-
-- stage: Build
-  displayName: Build image
-  jobs:
   - job: Build
     displayName: Build
     steps:
