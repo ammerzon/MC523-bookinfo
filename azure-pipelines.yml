@@ -35,10 +35,7 @@ stages:
     condition: succeeded()
     steps:
     - task: Docker@2
-      displayName: Build an push image
       inputs:
-        containerRegistry: '$(CONTAINERREGISTRYNAME)'
-        repository: 'bookinfo'
-        command: 'buildAndPush'
+        command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/mongodb/Dockerfile'
         tags: '$(tag)'
