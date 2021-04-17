@@ -26,6 +26,8 @@ stages:
         script: 'read -sp $(AZUREPASSWORD) AZ_PASS && echo && az login -u $(AZUREUSERNAME) -p $AZ_PASS'
   - job: Build
     displayName: Build Image
+    dependsOn: Preperation
+    condition: success()
     steps:
     - task: Docker@2
       displayName: Build an push image
