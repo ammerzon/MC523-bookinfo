@@ -85,7 +85,7 @@ spec:
       serviceAccountName: bookinfo-details
       containers:
       - name: details
-        image: ghcr.io/ammerzon/bookinfo-details-v1
+        image: bookinfo-details
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -142,8 +142,11 @@ spec:
       serviceAccountName: bookinfo-ratings
       containers:
       - name: ratings
-        image: ghcr.io/ammerzon/bookinfo-ratings-v2
+        image: bookinfo-ratings
         imagePullPolicy: IfNotPresent
+        env:
+        - name: MONGO_DB_URL
+          value: "mongodb://mongodb:27017/test?authSource=test&ssl=true"
         ports:
         - containerPort: 9080
       imagePullSecrets:
@@ -199,7 +202,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: ghcr.io/ammerzon/bookinfo-reviews-v1
+        image: bookinfo-reviews-v1
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -243,7 +246,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: ghcr.io/ammerzon/bookinfo-reviews-v2
+        image: bookinfo-reviews-v2
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -287,7 +290,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: ghcr.io/ammerzon/bookinfo-reviews-v3
+        image: bookinfo-reviews-v3
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -357,7 +360,7 @@ spec:
       serviceAccountName: bookinfo-productpage
       containers:
       - name: productpage
-        image: ghcr.io/ammerzon/bookinfo-productpage-v1
+        image: bookinfo-productpage
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080

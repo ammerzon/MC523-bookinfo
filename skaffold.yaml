@@ -4,40 +4,40 @@ metadata:
   name: bookinfo
 build:
   local:
-    push: true
+    push: false
   artifacts:
-    - image: ghcr.io/ammerzon/bookinfo-details-v1
+    - image: bookinfo-details
       context: src/details
       docker:
         dockerfile: Dockerfile
-    - image: ghcr.io/ammerzon/bookinfo-productpage-v1
+    - image: bookinfo-productpage
       context: src/productpage
       docker:
         dockerfile: Dockerfile
-    - image: ghcr.io/ammerzon/bookinfo-ratings-v2
+    - image: bookinfo-ratings
       context: src/ratings
       docker:
         dockerfile: Dockerfile
         buildArgs:
           service_version: v2
-    - image: ghcr.io/ammerzon/bookinfo-ratings-admin-v1
+    - image: bookinfo-ratings-admin
       context: src/ratings-admin
       docker:
         dockerfile: src/main/docker/Dockerfile.native
-    - image: ghcr.io/ammerzon/bookinfo-reviews-v1
+    - image: bookinfo-reviews-v1
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
         buildArgs:
           service_version: v1
-    - image: ghcr.io/ammerzon/bookinfo-reviews-v2
+    - image: bookinfo-reviews-v2
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
         buildArgs:
           service_version: v2
           enable_ratings: true
-    - image: ghcr.io/ammerzon/bookinfo-reviews-v3
+    - image: bookinfo-reviews-v3
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
@@ -45,7 +45,7 @@ build:
           service_version: v3
           enable_ratings: true
           star_color: red
-    - image: ghcr.io/ammerzon/bookinfo-mongodb
+    - image: bookinfo-mongodb
       context: src/mongodb
       docker:
         dockerfile: Dockerfile
@@ -54,3 +54,4 @@ deploy:
     manifests:
       - platform/bookinfo.yaml
       - platform/bookinfo-db.yaml
+      - platform/extras/prometheus.yaml
