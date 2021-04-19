@@ -1,9 +1,10 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
-- main
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - /src/ratings/
 
 resources:
 - repo: self
