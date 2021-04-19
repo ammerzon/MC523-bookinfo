@@ -43,3 +43,15 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'docker push $(remote_tag)'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)/kubernetes'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/kubernetes'
+        flattenFolders: true
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
