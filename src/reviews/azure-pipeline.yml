@@ -13,7 +13,7 @@ resources:
 - repo: self
 
 variables:
-  remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME):latest
+  remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME)
 
 stages:
 - stage: Build
@@ -42,7 +42,7 @@ stages:
       inputs:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
-        arguments: '-t $(remote_tag) --build-arg service_version=v1'
+        arguments: '-t $(remote_tag)-v1 --build-arg service_version=v1'
     - task: Bash@3
       displayName: Push Image
       inputs:
