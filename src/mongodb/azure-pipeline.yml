@@ -1,12 +1,13 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 pool:
   vmImage: 'ubuntu-20.04'
 
 trigger:
-- main
+  branches:
+    include:
+    - main
+  path:
+    include:
+    - /src/mongodb/
 
 resources:
 - repo: self
