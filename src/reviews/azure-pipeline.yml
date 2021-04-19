@@ -20,7 +20,7 @@ stages:
   displayName: Build Stage
   jobs:
   - job: Authenticate
-    displayname: Authenticate
+    displayName: Authenticate
     steps:
     - task: Bash@3
       displayName: Login to Azure
