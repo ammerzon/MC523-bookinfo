@@ -437,7 +437,7 @@ spec:
         app.kubernetes.io/name: ratings-admin
       namespace: bookinfo
     spec:
-      serviceAccountName: ratings-admin
+      serviceAccountName: bookinfo-ratings-admin
       containers:
       - name: ratings-admin
         image: ratings-admin
