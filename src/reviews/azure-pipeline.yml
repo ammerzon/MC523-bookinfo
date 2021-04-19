@@ -14,6 +14,7 @@ resources:
 
 variables:
   remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME)
+  remote_tag_v1: $(remote_tag)-v1:latest
 
 stages:
 - stage: Build
@@ -42,9 +43,9 @@ stages:
       inputs:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
-        arguments: '-t $(remote_tag)-v1 --build-arg service_version=v1'
+        arguments: '-t $(remote_tag_v1) --build-arg service_version=v1'
     - task: Bash@3
       displayName: Push Image
       inputs:
         targetType: 'inline'
-        script: 'docker push $(remote_tag)'
+        script: 'docker push $(remote_tag_v1)'
