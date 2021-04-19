@@ -37,7 +37,7 @@ stages:
       inputs:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/ratings/Dockerfile'
-        arguments: '-t $(remote_tag)'
+        arguments: '-t $(remote_tag) --build-arg service_version=v2'
     - task: Bash@3
       displayName: Push Image
       inputs:
