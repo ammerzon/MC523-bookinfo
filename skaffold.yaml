@@ -6,38 +6,38 @@ build:
   local:
     push: false
   artifacts:
-    - image: bookinfo-details
+    - image: details
       context: src/details
       docker:
         dockerfile: Dockerfile
-    - image: bookinfo-productpage
+    - image: productpage
       context: src/productpage
       docker:
         dockerfile: Dockerfile
-    - image: bookinfo-ratings
+    - image: ratings
       context: src/ratings
       docker:
         dockerfile: Dockerfile
         buildArgs:
           service_version: v2
-    - image: bookinfo-ratings-admin
+    - image: ratings-admin
       context: src/ratings-admin
       docker:
         dockerfile: src/main/docker/Dockerfile.native
-    - image: bookinfo-reviews-v1
+    - image: reviews-v1
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
         buildArgs:
           service_version: v1
-    - image: bookinfo-reviews-v2
+    - image: reviews-v2
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
         buildArgs:
           service_version: v2
           enable_ratings: true
-    - image: bookinfo-reviews-v3
+    - image: reviews-v3
       context: src/reviews/reviews-wlpcfg
       docker:
         dockerfile: Dockerfile
@@ -45,13 +45,13 @@ build:
           service_version: v3
           enable_ratings: true
           star_color: red
-    - image: bookinfo-mongodb
+    - image: mongodb
       context: src/mongodb
       docker:
         dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
-      - platform/bookinfo.yaml
-      - platform/bookinfo-db.yaml
-      - platform/extras/prometheus.yaml
+      - kubernetes/platform/bookinfo.yaml
+      - kubernetes/platform/bookinfo-db.yaml
+      - kubernetes/networking/bookinfo-gateway.yaml

@@ -85,7 +85,7 @@ spec:
       serviceAccountName: bookinfo-details
       containers:
       - name: details
-        image: bookinfo-details
+        image: details
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -142,7 +142,7 @@ spec:
       serviceAccountName: bookinfo-ratings
       containers:
       - name: ratings
-        image: bookinfo-ratings
+        image: ratings
         imagePullPolicy: IfNotPresent
         env:
         - name: MONGO_DB_URL
@@ -202,7 +202,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: bookinfo-reviews-v1
+        image: reviews-v1
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -246,7 +246,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: bookinfo-reviews-v2
+        image: reviews-v2
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -290,7 +290,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: reviews
-        image: bookinfo-reviews-v3
+        image: reviews-v3
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
@@ -360,7 +360,7 @@ spec:
       serviceAccountName: bookinfo-productpage
       containers:
       - name: productpage
-        image: bookinfo-productpage
+        image: productpage
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
@@ -373,3 +373,83 @@ spec:
       - name: tmp
         emptyDir: {}
 ---
+##################################################################################################
+# ratings-admin services
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/port: "8080"
+    prometheus.io/scheme: http
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /q/metrics
+  labels:
+    app.kubernetes.io/name: ratings-admin
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+  name: ratings-admin
+  namespace: bookinfo
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: ratings-admin
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-ratings-admin
+  namespace: bookinfo
+  labels:
+    account: ratings-admin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    prometheus.io/port: "8080"
+    prometheus.io/scheme: http
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /q/metrics
+  labels:
+    app.kubernetes.io/version: 1.0.0-SNAPSHOT
+    app.kubernetes.io/name: ratings-admin
+  name: ratings-admin
+  namespace: bookinfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/version: 1.0.0-SNAPSHOT
+      app.kubernetes.io/name: ratings-admin
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "8080"
+        prometheus.io/scheme: http
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /q/metrics
+      labels:
+        app.kubernetes.io/version: 1.0.0-SNAPSHOT
+        app.kubernetes.io/name: ratings-admin
+      namespace: bookinfo
+    spec:
+      serviceAccountName: ratings-admin
+      containers:
+      - name: ratings-admin
+        image: ratings-admin
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: MONGO_DB_HOST
+            value: mongodb
+          - name: MONGO_DB_PORT
+            value: "27017"
+        ports:
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+      imagePullSecrets:
+        - name: regsecretska

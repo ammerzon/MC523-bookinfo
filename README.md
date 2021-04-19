@@ -38,6 +38,7 @@ skaffold dev
 4. Deploy additional services
 ```bash
 kubectl apply -f platform/extras/jaeger.yaml
+kubectl apply -f platform/extras/prometheus.yaml
 kubectl apply -f platform/extras/kiali.yaml
 ```
 
