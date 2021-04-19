@@ -12,7 +12,6 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
   remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME):latest
 
 stages:
@@ -22,10 +21,6 @@ stages:
   - job: Build
     displayName: Build Image
     steps:
-    - task: DockerInstaller@0
-      displayName: Install Docker
-      inputs:
-        dockerVersion: '20.10.5'
     - task: Bash@3
       displayName: Login to Azure
       inputs:
