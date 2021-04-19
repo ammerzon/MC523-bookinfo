@@ -15,13 +15,15 @@ resources:
 variables:
   remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME)
   remote_tag_v1: $(remote_tag)-v1:latest
+  remote_tag_v2: $(remote_tag)-v2:latest
+  remote_tag_v3: $(remote_tag)-v3:latest
 
 stages:
 - stage: Build
   displayName: Build Stage
   jobs:
-  - job: Authenticate
-    displayName: Authenticate
+  - job: BuildPush
+    displayName: Build/Push
     steps:
     - task: Bash@3
       displayName: Login to Azure
@@ -33,19 +35,36 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
-  - job: Build_v1
-    displayName: Build/Push v1
-    dependsOn: Authenticate
-    condition: succeeded()
-    steps:
     - task: Docker@2
-      displayName: Build Image
+      displayName: Build v1
       inputs:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
         arguments: '-t $(remote_tag_v1) --build-arg service_version=v1'
+    - task: Docker@2
+      displayName: Build v2
+      inputs:
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
+        arguments: '-t $(remote_tag_v2) --build-arg service_version=v2 --build-arg enable_ratings=true'
+    - task: Docker@2
+      displayName: Build v3
+      inputs:
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
+        arguments: '-t $(remote_tag_v3) --build-arg service_version=v2 --build-arg enable_ratings=true --build-arg star_color=red'
     - task: Bash@3
-      displayName: Push Image
+      displayName: Push v1
       inputs:
         targetType: 'inline'
         script: 'docker push $(remote_tag_v1)'
+    - task: Bash@3
+      displayName: Push v2
+      inputs:
+        targetType: 'inline'
+        script: 'docker push $(remote_tag_v2)'
+    - task: Bash@3
+      displayName: Push v3
+      inputs:
+        targetType: 'inline'
+        script: 'docker push $(remote_tag_v3)'
