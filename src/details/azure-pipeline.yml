@@ -1,0 +1,45 @@
+pool:
+  vmImage: 'ubuntu-20.04'
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - /src/details/
+
+resources:
+- repo: self
+
+variables:
+  remote_tag: $(CONTAINERREGISTRYLOGINSERVER)/$(CONTAINERREPOSITORY)/$(CONTAINERNAME):latest
+
+stages:
+- stage: Build
+  displayName: Build Stage
+  jobs:
+  - job: Build
+    displayName: Build Image
+    steps:
+    - task: Bash@3
+      displayName: Login to Azure
+      inputs:
+        targetType: 'inline'
+        script: 'az login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)'
+    - task: Bash@3
+      displayName: Login to Container Registry
+      inputs:
+        targetType: 'inline'
+        script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
+    - task: Docker@2
+      displayName: Build Image
+      inputs:
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/src/details/Dockerfile'
+        arguments: '-t $(remote_tag)'
+    - task: Bash@3
+      displayName: Push Image
+      inputs:
+        targetType: 'inline'
+        script: 'docker push $(remote_tag)'
