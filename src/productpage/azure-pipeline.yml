@@ -47,11 +47,13 @@ stages:
         configMode: 'manual'
         cliProjectKey: '$(SonarCloud Project Key)'
         cliProjectName: 'Productpage'
-        cliSources: '.'
-    - task: SonarCloudAnalyze@1
-      displayName: 'Run SonarCloud analysis'
+        cliSources: './src/productpage'
+    
     - task: SonarCloudPublish@1
       displayName: 'Publish results on build summary'
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
     - task: Bash@3
       displayName: Push Image
       inputs:
