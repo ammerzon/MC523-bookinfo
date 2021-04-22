@@ -40,6 +40,7 @@ skaffold dev
 kubectl apply -f platform/extras/jaeger.yaml
 kubectl apply -f platform/extras/prometheus.yaml
 kubectl apply -f platform/extras/kiali.yaml
+kubectl apply -f platform/extras/grafana.yaml
 ```
 
 > If there are errors trying to install the extras, try running the command again. There may be some timing issues which will be resolved when the command is run again.

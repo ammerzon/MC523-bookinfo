@@ -1,0 +1,8 @@
+kubectl patch deployment details-v1 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"details","image":"bookinforegistry.azurecr.io/bookinfo/details"}]}}}}'
+kubectl patch deployment mongodb-v1 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"mongodb","image":"bookinforegistry.azurecr.io/bookinfo/mongodb"}]}}}}'
+kubectl patch deployment productpage-v1 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"productpage","image":"bookinforegistry.azurecr.io/bookinfo/productpage"}]}}}}'
+kubectl patch deployment ratings-v1 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"ratings","image":"bookinforegistry.azurecr.io/bookinfo/ratings"}]}}}}'
+kubectl patch deployment ratings-admin -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"ratings-admin","image":"bookinforegistry.azurecr.io/bookinfo/ratings-admin"}]}}}}'
+kubectl patch deployment reviews-v1 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"reviews","image":"bookinforegistry.azurecr.io/bookinfo/reviews-v1"}]}}}}'
+kubectl patch deployment reviews-v2 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"reviews","image":"bookinforegistry.azurecr.io/bookinfo/reviews-v2"}]}}}}'
+kubectl patch deployment reviews-v3 -n bookinfo -p '{"spec":{"template":{"spec":{"containers":[{"name":"reviews","image":"bookinforegistry.azurecr.io/bookinfo/reviews-v3"}]}}}}'
