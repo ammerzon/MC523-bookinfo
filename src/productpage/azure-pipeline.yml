@@ -29,6 +29,7 @@ stages:
         script: |
           az login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)
           pwd
+          ls -l
     - task: Bash@3
       displayName: Login to Container Registry
       inputs:
