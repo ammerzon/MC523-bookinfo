@@ -42,10 +42,12 @@ stages:
       displayName: 'Prepare analysis configuration'
       inputs:
         SonarCloud: 'SonarCloud Bookinfo'
-        projectKey: 'ammerzon_bookinfo_productpage'
         organization: 'ammerzon'
         scannerMode: 'CLI'
-        configMode: 'file'
+        configMode: 'manual'
+        cliProjectKey: '$(SonarCloud Project Key)'
+        cliProjectName: 'Productpage'
+        cliSources: '.'
     - task: SonarCloudAnalyze@1
       displayName: 'Run SonarCloud analysis'
     - task: SonarCloudPublish@1
