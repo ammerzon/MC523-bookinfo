@@ -38,6 +38,18 @@ stages:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/productpage/Dockerfile'
         arguments: '-t $(remote_tag)'
+    - task: SonarCloudPrepare@1
+      displayName: 'Prepare analysis configuration'
+      inputs:
+        SonarCloud: 'SonarCloud Bookinfo'
+        projectKey: 'ammerzon_bookinfo_productpage'
+        organization: 'ammerzon'
+        scannerMode: 'CLI'
+        configMode: 'file'
+    - task: SonarCloudAnalyze@1
+      displayName: 'Run SonarCloud analysis'
+    - task: SonarCloudPublish@1
+      displayName: 'Publish results on build summary'
     - task: Bash@3
       displayName: Push Image
       inputs:
