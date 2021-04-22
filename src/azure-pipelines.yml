@@ -36,7 +36,7 @@ stages:
       displayName: Build Image
       inputs:
         command: 'build'
-        Dockerfile: '$(Build.SourcesDirectory)/src/ratings-admin/src/main/docker/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/src/ratings-admin/src/main/docker/Dockerfile.native'
         arguments: '-t $(remote_tag)'
     - task: Bash@3
       displayName: Push Image
