@@ -86,7 +86,7 @@ spec:
       containers:
       - name: details
         image: details
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 9080
       imagePullSecrets:
@@ -143,7 +143,7 @@ spec:
       containers:
       - name: ratings
         image: ratings
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: MONGO_DB_URL
           value: "mongodb://mongodb:27017/test?authSource=test&ssl=true"
@@ -203,7 +203,7 @@ spec:
       containers:
       - name: reviews
         image: reviews-v1
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: LOG_DIR
           value: "/tmp/logs"
@@ -247,7 +247,7 @@ spec:
       containers:
       - name: reviews
         image: reviews-v2
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: LOG_DIR
           value: "/tmp/logs"
@@ -291,7 +291,7 @@ spec:
       containers:
       - name: reviews
         image: reviews-v3
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
         - name: LOG_DIR
           value: "/tmp/logs"
@@ -361,7 +361,7 @@ spec:
       containers:
       - name: productpage
         image: productpage
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 9080
         volumeMounts:
@@ -379,11 +379,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    prometheus.io/port: "8080"
-    prometheus.io/scheme: http
-    prometheus.io/scrape: "true"
-    prometheus.io/path: /q/metrics
   labels:
     app.kubernetes.io/name: ratings-admin
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
@@ -409,11 +404,6 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    prometheus.io/port: "8080"
-    prometheus.io/scheme: http
-    prometheus.io/scrape: "true"
-    prometheus.io/path: /q/metrics
   labels:
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
     app.kubernetes.io/name: ratings-admin
@@ -427,11 +417,6 @@ spec:
       app.kubernetes.io/name: ratings-admin
   template:
     metadata:
-      annotations:
-        prometheus.io/port: "8080"
-        prometheus.io/scheme: http
-        prometheus.io/scrape: "true"
-        prometheus.io/path: /q/metrics
       labels:
         app.kubernetes.io/version: 1.0.0-SNAPSHOT
         app.kubernetes.io/name: ratings-admin
@@ -441,7 +426,7 @@ spec:
       containers:
       - name: ratings-admin
         image: ratings-admin
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         env:
           - name: MONGO_DB_HOST
             value: mongodb

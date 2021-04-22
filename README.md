@@ -4,6 +4,21 @@ Final project for the subject MC523 SS21 at FH OÖ Campus Hagenberg based on the
 
 See: <https://istio.io/docs/examples/bookinfo/>
 
+## 🏗 Architecture
+
+The Bookinfo application is broken into four separate microservices:
+
+| Service       | Status                                                                                                                                                                                                                       | Quality                                                                                                                                                                          | Description                                                                                                |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| productpage   | [![Build Status](https://dev.azure.com/MC523-book-info/bookinfo/_apis/build/status/Productpage%20Pipeline?branchName=main)](https://dev.azure.com/MC523-book-info/bookinfo/_build/latest?definitionId=5&branchName=main)     | [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ammerzon_bookinfo_productpage)](https://sonarcloud.io/dashboard?id=ammerzon_bookinfo_productpage) | The ``productpage`` microservice calls the ``details`` and ``reviews`` microservices to populate the page. |
+| details       | [![Build Status](https://dev.azure.com/MC523-book-info/bookinfo/_apis/build/status/Details%20pipeline?branchName=main)](https://dev.azure.com/MC523-book-info/bookinfo/_build/latest?definitionId=4&branchName=main)         | [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ammerzon_bookinfo_details)](https://sonarcloud.io/dashboard?id=ammerzon_bookinfo_details)         | The ``details`` microservice contains book information.                                                    |
+| reviews       | [![Build Status](https://dev.azure.com/MC523-book-info/bookinfo/_apis/build/status/Reviews%20Pipeline?branchName=main)](https://dev.azure.com/MC523-book-info/bookinfo/_build/latest?definitionId=3&branchName=main)         |                                                                                                                                                                                  | The ``reviews`` microservice contains book reviews. It also calls the ``ratings`` microservice.            |
+| ratings       | [![Build Status](https://dev.azure.com/MC523-book-info/bookinfo/_apis/build/status/Ratings%20Pipeline?branchName=main)](https://dev.azure.com/MC523-book-info/bookinfo/_build/latest?definitionId=2&branchName=main)         | [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ammerzon_bookinfo_ratings)](https://sonarcloud.io/dashboard?id=ammerzon_bookinfo_ratings)         | The ``ratings`` microservice contains book ranking information that accompanies a book review.             |
+| ratings-admin | [![Build Status](https://dev.azure.com/MC523-book-info/bookinfo/_apis/build/status/Ratings%20Admin%20Pipeline?branchName=main)](https://dev.azure.com/MC523-book-info/bookinfo/_build/latest?definitionId=6&branchName=main) |                                                                                                                                                                                  | The ``ratings-admin`` microservice offers an REST API to maintain the ratings.                             |
+| mongodb       | [![Build Status](https://dev.azure.com/MC523-book-info/bookinfo/_apis/build/status/MongoDb%20Pipeline?branchName=main)](https://dev.azure.com/MC523-book-info/bookinfo/_build/latest?definitionId=1&branchName=main)         | [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ammerzon_bookinfo_mongodb)](https://sonarcloud.io/dashboard?id=ammerzon_bookinfo_mongodb)         | The ``mongodb`` service contains the database of the application.                                          |
+
+![](.github/architecture.png)
+
 ## 📝 Requirements
 
 - `docker`
@@ -73,15 +88,3 @@ skaffold build
 ```bash
 skaffold run --default-repo <myrepo>
 ```
-
-## 🏗 Architecture
-
-The Bookinfo application is broken into four separate microservices:
-
-* **productpage**: The ``productpage`` microservice calls the ``details`` and ``reviews`` microservices to populate the page.
-* **details**: The ``details`` microservice contains book information.
-* **reviews**: The ``reviews`` microservice contains book reviews. It also calls the ``ratings`` microservice.
-* **ratings**: The ``ratings`` microservice contains book ranking information that accompanies a book review.
-* **ratings-admin**: The ``ratings-admin`` microservice offers an REST API to maintain the ratings.
-
-![](.github/architecture.png)

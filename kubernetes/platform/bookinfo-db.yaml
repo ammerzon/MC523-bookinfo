@@ -50,7 +50,7 @@ spec:
       containers:
       - name: mongodb 
         image: mongodb
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 27017
       imagePullSecrets:
