@@ -32,6 +32,11 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
+    - task: Bash@3
+      displayName: Fetch git submodule
+      inputs:
+        targetType: 'inline'
+        script: 'git submodule update --init --recursive'
     - task: Docker@2
       displayName: Build Image
       inputs:
