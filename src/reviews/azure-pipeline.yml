@@ -55,7 +55,7 @@ stages:
         arguments: '-t $(remote_tag_v3) --build-arg service_version=v2 --build-arg enable_ratings=true --build-arg star_color=red'
     - task: Gradle@2
       inputs:
-        gradleWrapperFile: 'gradlew'
+        gradleWrapperFile: './src/reviews/gradlew'
         workingDirectory: './src/reviews'
         tasks: 'build'
         publishJUnitResults: true
