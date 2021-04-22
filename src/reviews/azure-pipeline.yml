@@ -53,6 +53,17 @@ stages:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
         arguments: '-t $(remote_tag_v3) --build-arg service_version=v2 --build-arg enable_ratings=true --build-arg star_color=red'
+    - task: Gradle@2
+      inputs:
+        gradleWrapperFile: 'gradlew'
+        workingDirectory: './src/reviews'
+        tasks: 'build'
+        publishJUnitResults: true
+        testResultsFiles: '**/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        sonarQubeRunAnalysis: false
+        checkStyleRunAnalysis: true
+        findBugsRunAnalysis: true
     - task: SonarCloudPrepare@1
       displayName: 'Prepare analysis configuration'
       inputs:
@@ -63,6 +74,8 @@ stages:
         cliProjectKey: '$(SonarCloud Project Key)'
         cliProjectName: 'Reviews'
         cliSources: './src/reviews'
+        extraProperties: |
+          sonar.java.binaries=**/build/classes
     - task: SonarCloudAnalyze@1
       displayName: 'Run SonarCloud analysis'
     - task: SonarCloudPublish@1
