@@ -48,7 +48,6 @@ stages:
         cliProjectKey: '$(SonarCloud Project Key)'
         cliProjectName: 'Productpage'
         cliSources: './src/productpage'
-    
     - task: SonarCloudPublish@1
       displayName: 'Publish results on build summary'
     - task: SonarCloudPublish@1
