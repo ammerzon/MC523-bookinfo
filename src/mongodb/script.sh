@@ -16,5 +16,3 @@
 
 set -e
 mongoimport --host localhost --db test --collection ratings --drop --file /app/data/ratings_data.json
-
-# hi i am a new unnecessary comment, please delete me later
