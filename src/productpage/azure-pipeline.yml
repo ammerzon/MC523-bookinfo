@@ -26,7 +26,9 @@ stages:
       displayName: Login to Azure
       inputs:
         targetType: 'inline'
-        script: 'az login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)'
+        script: |
+          az login -u $(AZUREUSERNAME) -p $(AZUREPASSWORD)
+          pwd
     - task: Bash@3
       displayName: Login to Container Registry
       inputs:
@@ -51,6 +53,7 @@ stages:
     - task: SonarCloudPublish@1
       displayName: 'Publish results on build summary'
     - task: SonarCloudPublish@1
+      displayName: 'Publish results on build summary'
       inputs:
         pollingTimeoutSec: '300'
     - task: Bash@3
