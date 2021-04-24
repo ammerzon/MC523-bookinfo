@@ -35,12 +35,15 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
-    - task: CmdLine@2
+    - task: Gradle@2
       inputs:
-        script: |
-          pushd "$(Build.SourcesDirectory)/src/reviews"
-          docker run --rm -u root -v "$(pwd)":/home/gradle/project -w /home/gradle/project gradle:4.8.1 gradle clean build
-          popd
+        gradleWrapperFile: './src/reviews/gradlew'
+        workingDirectory: './src/reviews'
+        tasks: 'clean build'
+        publishJUnitResults: true
+        testResultsFiles: '**/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        sonarQubeRunAnalysis: false
     - task: Docker@2
       displayName: Build v1
       inputs:
@@ -59,15 +62,6 @@ stages:
         command: 'build'
         Dockerfile: '$(Build.SourcesDirectory)/src/reviews/reviews-wlpcfg/Dockerfile'
         arguments: '-t $(remote_tag_v3) --build-arg service_version=v3 --build-arg enable_ratings=true --build-arg star_color=red'
-    - task: Gradle@2
-      inputs:
-        gradleWrapperFile: './src/reviews/gradlew'
-        workingDirectory: './src/reviews'
-        tasks: 'build'
-        publishJUnitResults: true
-        testResultsFiles: '**/TEST-*.xml'
-        javaHomeOption: 'JDKVersion'
-        sonarQubeRunAnalysis: false
     - task: SonarCloudPrepare@1
       displayName: 'Prepare analysis configuration'
       inputs:
