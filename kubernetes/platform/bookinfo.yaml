@@ -146,7 +146,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: MONGO_DB_URL
-          value: "mongodb://mongodb:27017/test?authSource=test&ssl=true"
+          value: "mongodb://mongodb:27017/test"
         ports:
         - containerPort: 9080
       imagePullSecrets:
