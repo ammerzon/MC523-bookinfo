@@ -35,6 +35,12 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'az acr login --name $(CONTAINERREGISTRYNAME)'
+    - task: CmdLine@2
+      inputs:
+        script: |
+          pushd "$(Build.SourcesDirectory)/src/reviews"
+          docker run --rm -u root -v "$(pwd)":/home/gradle/project -w /home/gradle/project gradle:4.8.1 gradle clean build
+          popd
     - task: Docker@2
       displayName: Build v1
       inputs:
