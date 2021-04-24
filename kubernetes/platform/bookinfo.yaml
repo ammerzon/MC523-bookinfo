@@ -89,6 +89,8 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 9080
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecret
 ---
@@ -149,6 +151,8 @@ spec:
           value: "mongodb://mongodb:27017/test"
         ports:
         - containerPort: 9080
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecret
 ---
@@ -214,6 +218,8 @@ spec:
           mountPath: /tmp
         - name: wlp-output
           mountPath: /opt/ibm/wlp/output
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecret
       volumes:
@@ -254,10 +260,12 @@ spec:
         ports:
         - containerPort: 9080
         volumeMounts:
-        - name: tmp
-          mountPath: /tmp
-        - name: wlp-output
-          mountPath: /opt/ibm/wlp/output
+          - name: tmp
+            mountPath: /tmp
+          - name: wlp-output
+            mountPath: /opt/ibm/wlp/output
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecret
       volumes:
@@ -302,6 +310,8 @@ spec:
           mountPath: /tmp
         - name: wlp-output
           mountPath: /opt/ibm/wlp/output
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecret
       volumes:
@@ -367,6 +377,8 @@ spec:
         volumeMounts:
         - name: tmp
           mountPath: /tmp
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecret
       volumes:
@@ -436,5 +448,7 @@ spec:
           - containerPort: 8080
             name: http
             protocol: TCP
+        securityContext:
+          runAsUser: 1000
       imagePullSecrets:
         - name: regsecretska

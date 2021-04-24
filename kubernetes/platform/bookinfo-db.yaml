@@ -53,6 +53,12 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 27017
+        volumeMounts:
+          - name: data-db
+            mountPath: /data/db
       imagePullSecrets:
         - name: regsecret
+      volumes:
+        - name: data-db
+          emptyDir: { }
 ---
